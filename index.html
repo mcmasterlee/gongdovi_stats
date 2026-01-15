@@ -22,10 +22,10 @@
             --border: 1px solid #E2E8F0;
             
             /* Target Colors */
-            --female: #EC4899; /* Pink */
-            --male: #3B82F6;   /* Blue */
-            --age30: #F59E0B;  /* Amber */
-            --age40: #10B981;  /* Emerald */
+            --female: #EC4899; 
+            --male: #3B82F6;   
+            --age30: #F59E0B;  
+            --age40: #10B981;  
         }
 
         body {
@@ -94,8 +94,6 @@
         .switch-btn.active { background: #FFFFFF; color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 
         .fixed-height-box { height: 320px; width: 100%; position: relative; overflow: hidden; }
-        
-        /* Views */
         .chart-view { width: 100%; height: 100%; display: block; position: relative; }
         .table-view {
             width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden;
@@ -103,20 +101,15 @@
         }
         .table-view.active { display: block; }
 
-        /* --- CSS Infographic --- */
+        /* Target Infographic CSS */
         .target-infographic {
             display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 10px 0;
         }
-        
         .info-group { margin-bottom: 25px; }
         .info-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
-        
-        /* Gender Bar */
         .gender-bar-bg { width: 100%; height: 24px; background: #F1F5F9; border-radius: 12px; overflow: hidden; display: flex; }
         .gender-f { height: 100%; background: var(--female); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; transition: width 0.5s;}
         .gender-m { height: 100%; background: var(--male); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; transition: width 0.5s;}
-
-        /* Age Bars */
         .age-item { margin-bottom: 12px; }
         .age-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; color: var(--secondary); }
         .progress-track { width: 100%; height: 10px; background: #F1F5F9; border-radius: 5px; overflow: hidden; }
@@ -124,7 +117,7 @@
         .fill-30 { background: var(--age30); }
         .fill-40 { background: var(--age40); }
 
-        /* --- Tables --- */
+        /* Table Styles */
         .analysis-table, .event-table { 
             width: 100% !important; table-layout: fixed !important; 
             border-collapse: collapse; font-size: 13px; 
@@ -198,7 +191,7 @@
             <div id="diff-total">-</div>
         </div>
         <div class="card span-1">
-            <div class="card-title">월간 총 방문 횟수 (Total)</div>
+            <div class="card-title">월간 총 방문 횟수 (Visits)</div>
             <div class="kpi-value" id="kpi-visit">-</div>
             <div id="diff-visit">-</div>
         </div>
@@ -245,14 +238,13 @@
             <div class="chart-header">
                 <div class="chart-title"><i class="fa-solid fa-users"></i> 타겟 분석</div>
                 <div class="view-switch">
-                    <!-- Button Text Changed Here -->
+                    <!-- Button name restored to 'Chart' -->
                     <button class="switch-btn active" id="btn-target-chart" onclick="toggleView('target', 'chart')">차트</button>
                     <button class="switch-btn" id="btn-target-table" onclick="toggleView('target', 'table')">표</button>
                 </div>
             </div>
 
             <div class="fixed-height-box">
-                <!-- CSS Infographic View -->
                 <div id="targetChartWrapper" class="chart-view">
                     <div class="target-infographic">
                         <!-- Gender -->
@@ -284,7 +276,6 @@
                     </div>
                 </div>
                 
-                <!-- Table View -->
                 <div id="targetTableWrapper" class="table-view">
                     <table class="analysis-table">
                          <colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
@@ -317,7 +308,7 @@
                 <div class="ai-sub-title">📊 Monthly Deep Dive</div>
                 <div id="ai-analysis" class="ai-text"></div>
                 <div style="margin-top: 20px;">
-                    <div class="ai-sub-title">🔥 익월(<span id="nextMonthLabel"></span>) 킬러 콘텐츠 Top 3</div>
+                    <div class="ai-sub-title">🔥 익월(<span id="nextMonthLabel"></span>) 킬러 콘텐츠 Top 3 (작년 데이터)</div>
                     <div id="ai-strategy"></div>
                 </div>
             </div>
@@ -326,7 +317,7 @@
 </div>
 
 <script>
-    // --- Data Definition ---
+    // --- Full Data (Re-inserted 1~12 Months) ---
     const statsDB = {
         '2024': {
             '01': { total:9068, new:406, unique:10265, pv:70782, visit:36873, f:89.7, age30:4.1, age40:33.7 },
@@ -361,11 +352,21 @@
     const MONTH_KEYS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
     const rankDB = { '01':'열매2','02':'열매1','03':'열매1','04':'열매1','05':'열매3','06':'열매5','07':'열매5','08':'열매5','09':'열매5','10':'열매5','11':'열매5','12':'열매5' };
     const scoreDB = { '01':'33,639','02':'30,352','03':'30,412','04':'29,471','05':'67,054','06':'98,294','07':'97,307','08':'87,130','09':'95,550','10':'92,313','11':'95,466','12':'105,705' };
+    
+    // [FULL EVENT DATA RESTORED]
     const eventDB = {
-        '2025-01': [{d:'1/07', t:'22년도 초등 1학기 교사용 교재 증정', v:664, c:35, l:30}, {d:'1/10', t:'고등 교사용 교재 증정', v:1453, c:122, l:35}],
-        '2025-12': [{d:'12/01', t:'개념루트&유형만렙 고등 수학 체험단', v:1101, c:51, l:34}, {d:'12/17', t:'2026 선생님 수업 지원! 수학교구 드림', v:1788, c:162, l:63}, {d:'12/18', t:'25년 효자 교재 소개 이벤트', v:1694, c:104, l:66}, {d:'12/19', t:'26년 초등/중학 1학기 교사용 교재 증정 2차', v:2286, c:212, l:73}],
-        '2025-02': [{d:'2/10', t:'2025 새학기 맞이 간식박스', v:1919, c:242, l:79}, {d:'2/25', t:'귀염뽀짝 완공이 스티커 인증', v:1048, c:155, l:42}],
-        '2025-03': [{d:'3/14', t:'22회 테솜 수학학력평가', v:802, c:187, l:33}, {d:'3/26', t:'중고등 완자 기출픽 체험단', v:779, c:62, l:26}]
+        '2025-01': [{d:'1/07', t:'22년도 초등 1학기 교사용 교재 증정', v:664, c:35, l:30}, {d:'1/10', t:'고등 교사용 교재 증정', v:1453, c:122, l:35}, {d:'1/14', t:'22개정 고등 개념+유형 세미나 사전 설문', v:639, c:30, l:16}, {d:'1/20', t:'개념루트&유형만렙 교재 체험단', v:626, c:13, l:10}, {d:'1/24', t:'22년도 초중등 1학기 교재 증정 2탄', v:1241, c:106, l:42}],
+        '2025-02': [{d:'2/10', t:'2025 새학기 맞이 간식박스', v:1919, c:242, l:79}, {d:'2/17', t:'완자공부력 전과목 어휘 교사용 체험단', v:889, c:30, l:23}, {d:'2/18', t:'고등 수학 유튜브 시청 교재 받기', v:592, c:21, l:14}, {d:'2/21', t:'25년도 초중등 1학기 교재 증정 3탄', v:1776, c:176, l:59}, {d:'2/25', t:'귀염뽀짝 완공이 스티커 인증', v:1048, c:155, l:42}],
+        '2025-03': [{d:'3/14', t:'22회 테솜 수학학력평가 교사용 교재', v:802, c:187, l:33}, {d:'3/17', t:'22개정 초등 수학 학습 가이드북', v:828, c:29, l:34}, {d:'3/19', t:'25년도 고등 과학/사회 교사용 교재', v:632, c:82, l:22}, {d:'3/26', t:'중고등 완자 기출픽 체험단', v:779, c:62, l:26}, {d:'3/31', t:'개념+유형X별나 스터디 플래너', v:389, c:5, l:14}],
+        '2025-04': [{d:'4/07', t:'25년도 1학기 마지막 교재 증정', v:1387, c:135, l:42}, {d:'4/15', t:'선생님들의 어린이날 아이디어 공모전', v:765, c:75, l:33}, {d:'4/18', t:'예스24X비상교육 스승의 날 이벤트', v:1464, c:98, l:46}, {d:'4/28', t:'어린이날 선물 뽑기 이벤트', v:1385, c:51, l:28}],
+        '2025-05': [{d:'5/02', t:'스승의 날 기념 공도비 굿즈 증정', v:1375, c:63, l:37}, {d:'5/12', t:'25년도 초등 수학 2학기 교재 증정', v:1163, c:156, l:85}, {d:'5/19', t:'완자 스무살 생일 축하', v:951, c:156, l:39}, {d:'5/26', t:'초, 중, 고등 오투 표지 디자인 선호도', v:748, c:145, l:43}],
+        '2025-06': [{d:'6/05', t:'공도비 월간 미션제 이벤트', v:1812, c:136, l:75}, {d:'6/10', t:'25년도 중학 수학 2학기 교재 증정', v:1819, c:258, l:73}, {d:'6/13', t:'완자공부력 표지 디자인 선호도', v:996, c:148, l:45}, {d:'6/16', t:'여름방학 대비 개념+유형 지우개 박스', v:1405, c:237, l:57}],
+        '2025-07': [{d:'7/02', t:'25년도 초중등 사회/과학 2학기 교재', v:1262, c:134, l:42}, {d:'7/14', t:'25년도 초중등 전과목 2학기 교재 증정', v:1733, c:235, l:67}, {d:'7/16', t:'초등+고등 수학 수학의 신 교재 체험단', v:725, c:44, l:37}, {d:'7/28', t:'25년도 초중등 전과목 2학기 증정 2차', v:1404, c:162, l:63}],
+        '2025-08': [{d:'8/01', t:'공도비 굿즈 받기 자랑 이벤트', v:847, c:54, l:27}, {d:'8/05', t:'비상교육 꼼꼼체 레드닷 어워드 수상 기념', v:1373, c:135, l:40}, {d:'8/22', t:'25년도 초중등 전과목 2학기 교재 증정 3차', v:709, c:47, l:41}, {d:'8/27', t:'22개정 완자 기출픽 체험단 모집', v:1362, c:61, l:45}],
+        '2025-09': [{d:'9/03', t:'22개정 중학 수학만 중간고사 교재 증정', v:1107, c:117, l:45}, {d:'9/04', t:'개념루트 9월 모의고사 풀이 영상 댓글', v:1819, c:14, l:20}, {d:'9/23', t:'25년도 초중등 2학기 교사용 교재 증정', v:855, c:68, l:33}, {d:'9/29', t:'리더스뱅크 교사용 교재 체험단', v:454, c:4, l:11}],
+        '2025-10': [{d:'10/02', t:'2025 결실 공유 한가위 이벤트', v:1248, c:86, l:55}, {d:'10/02', t:'22개정 고등 교사용 교재 증정', v:1638, c:188, l:57}, {d:'10/22', t:'수업은 개념+유형 x 숙제는 개념+연산', v:1036, c:44, l:37}, {d:'10/23', t:'비상교육 베스트 교재 표지 디자인 추천', v:1143, c:105, l:49}, {d:'10/31', t:'26년 중학 1학기 교사용 교재 증정', v:1761, c:212, l:71}],
+        '2025-11': [{d:'11/01', t:'공도비 회원 20,000명 달성 기원 칭찬', v:1365, c:120, l:68}, {d:'11/06', t:'국어 선생님 의견 설문조사', v:552, c:45, l:35}, {d:'11/07', t:'비상교육 베스트 교재 표지 디자인 투표', v:1063, c:173, l:66}, {d:'11/11', t:'2026 비상교육 탁상용/벽걸이 달력 증정', v:1773, c:365, l:98}, {d:'11/14', t:'26년 초등/중학 1학기 교사용 교재 증정', v:2089, c:217, l:76}],
+        '2025-12': [{d:'12/01', t:'개념루트&유형만렙 고등 수학 체험단', v:1101, c:51, l:34}, {d:'12/04', t:'완자공부력 사회 교과서 디자인 조사', v:664, c:78, l:41}, {d:'12/09', t:'초중등 수능독해 교사용 교재 증정', v:767, c:62, l:34}, {d:'12/17', t:'2026 선생님 수업 지원! 수학교구 드림', v:1788, c:162, l:63}, {d:'12/18', t:'25년 효자 교재 소개 이벤트', v:1694, c:104, l:66}, {d:'12/19', t:'26년 초등/중학 1학기 교사용 교재 증정 2차', v:2286, c:212, l:73}]
     };
 
     function getEvents(year, month) { return eventDB[`2025-${month}`] || []; }
@@ -551,9 +552,8 @@
         }, 600);
     }
 
-    // --- NEW: Render CSS Infographic ---
+    // --- Render CSS Infographic ---
     function renderTargetInfographic(data) {
-        // Gender
         const f = data.f;
         const m = (100 - f).toFixed(1);
         document.getElementById('val-female').innerText = f + '%';
@@ -561,7 +561,6 @@
         document.getElementById('bar-female').style.width = f + '%';
         document.getElementById('bar-male').style.width = m + '%';
 
-        // Age
         const a30 = data.age30;
         const a40 = data.age40;
         document.getElementById('val-age30').innerText = a30 + '%';
